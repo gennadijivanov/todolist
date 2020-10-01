@@ -4,9 +4,13 @@ import { Container, Paper, Typography } from '@material-ui/core';
 import { ToDoListContext } from '../contexts';
 import { ToDoItem } from '../types';
 
-const HomePage: React.FC = () => {
+interface Props {
+  todos: ToDoItem[];
+}
+
+const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
   const context = React.useContext(ToDoListContext);
-  const [toDos, setToDos] = React.useState<ToDoItem[]>([]);
+  const [toDos, setToDos] = React.useState<ToDoItem[]>(preloaded);
 
   const handleLoadToDos = () =>
     context.loadToDos().then((todos) => {

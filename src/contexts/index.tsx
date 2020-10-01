@@ -11,7 +11,7 @@ export const WithToDoListProvider: React.FC = ({ children }: { children?: React.
   return (
     <ToDoListContext.Provider
       value={{
-        loadToDos: () => fetch('api/todos').then(async (res: Response) => res.json() as Promise<ToDoItem[]>),
+        loadToDos: () => fetch('/api/todos').then(async (res: Response) => res.json() as Promise<ToDoItem[]>),
       }}
     >
       {children}
