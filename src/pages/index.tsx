@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import HomePage from '../components/HomePage';
+import { WithToDoListProvider } from '../contexts';
 
 export default function Home(): JSX.Element {
   return (
@@ -9,7 +10,9 @@ export default function Home(): JSX.Element {
         <title>To? Do!</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomePage></HomePage>
+      <WithToDoListProvider>
+        <HomePage></HomePage>
+      </WithToDoListProvider>
     </div>
   );
 }
