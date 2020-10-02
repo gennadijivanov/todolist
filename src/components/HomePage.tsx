@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Container, Paper, Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 
 import { ToDoListContext } from '../contexts';
 import { ToDoItem } from '../types';
+
+import ToDoList from './ToDoList';
 
 interface Props {
   todos: ToDoItem[];
@@ -29,18 +31,9 @@ const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
     <Container maxWidth="md">
       <Typography variant="h1" component="h1" gutterBottom={true}>
         To? Do!
-        <div style={{ float: 'right' }}>right</div>
       </Typography>
 
-      <Paper elevation={2}>
-        <ul>
-          {toDos.map(({ title }) => (
-            <li key={title}>
-              <h4>{title}</h4>
-            </li>
-          ))}
-        </ul>
-      </Paper>
+      <ToDoList todos={toDos}></ToDoList>
     </Container>
   );
 };
