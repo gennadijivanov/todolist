@@ -29,8 +29,8 @@ export default function Home({ todos }: { todos: ToDoItem[] }): JSX.Element {
         <title>To? Do!</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <WithToDoListProvider>
-        <HomePage todos={todos}></HomePage>
+      <WithToDoListProvider todos={todos}>
+        <HomePage></HomePage>
       </WithToDoListProvider>
     </div>
   );

@@ -6,32 +6,14 @@ import { ToDoItem } from '../types';
 
 import ToDoList from './ToDoList';
 
-interface Props {
-  todos: ToDoItem[];
-}
-
 const getActive = (tasks: ToDoItem[]): ToDoItem[] =>
   tasks.filter(({ done }) => !done);
 
 const getDone = (tasks: ToDoItem[]): ToDoItem[] =>
   tasks.filter(({ done }) => done);
 
-const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
-  const context = React.useContext(ToDoListContext);
-  const [toDos, setToDos] = React.useState<ToDoItem[]>(preloaded);
-
-  const handleLoadToDos = () =>
-    context.loadToDos().then((todos) => {
-      if (todos.length > 0) {
-        setToDos(todos);
-      }
-    });
-
-  React.useEffect(() => {
-    if (toDos.length === 0) {
-      handleLoadToDos();
-    }
-  }, []);
+const HomePage: React.FC = () => {
+  const { todos } = React.useContext(ToDoListContext);
 
   return (
     <Container maxWidth="md">
@@ -39,9 +21,9 @@ const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
         To? Do!
       </Typography>
 
-      <ToDoList todos={getActive(toDos)} title="Future"></ToDoList>
+      <ToDoList todos={getActive(todos)} title="Future"></ToDoList>
 
-      <ToDoList todos={getDone(toDos)} title="Past"></ToDoList>
+      <ToDoList todos={getDone(todos)} title="Past"></ToDoList>
     </Container>
   );
 };
