@@ -10,6 +10,12 @@ interface Props {
   todos: ToDoItem[];
 }
 
+const getActive = (tasks: ToDoItem[]): ToDoItem[] =>
+  tasks.filter(({ done }) => !done);
+
+const getDone = (tasks: ToDoItem[]): ToDoItem[] =>
+  tasks.filter(({ done }) => done);
+
 const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
   const context = React.useContext(ToDoListContext);
   const [toDos, setToDos] = React.useState<ToDoItem[]>(preloaded);
@@ -33,7 +39,9 @@ const HomePage: React.FC<Props> = ({ todos: preloaded }: Props) => {
         To? Do!
       </Typography>
 
-      <ToDoList todos={toDos}></ToDoList>
+      <ToDoList todos={getActive(toDos)} title="Future"></ToDoList>
+
+      <ToDoList todos={getDone(toDos)} title="Past"></ToDoList>
     </Container>
   );
 };
