@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { ToDoItem } from '../../types';
 
-export default (_: NextApiRequest, res: NextApiResponse<ToDoItem[]>): void => {
-  res.status(200).json([
+const getAllTasks = (): Promise<ToDoItem[]> => {
+  return Promise.resolve([
     {
       id: '333',
       title: 'ToDo 333',
@@ -20,4 +20,21 @@ export default (_: NextApiRequest, res: NextApiResponse<ToDoItem[]>): void => {
       done: true,
     },
   ]);
+};
+
+const createTask = (data: Omit<ToDoItem, 'id'>): Promise<ToDoItem> => {
+  return Promise.resolve({ ...data, id: '123' });
+};
+
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<ToDoItem | ToDoItem[]>,
+): Promise<void> => {
+  const { method, body } = req;
+
+  if (method === 'GET') {
+    res.status(200).json(await getAllTasks());
+  } else if (method === 'POST') {
+    res.status(200).json(await createTask(JSON.parse(body)));
+  }
 };

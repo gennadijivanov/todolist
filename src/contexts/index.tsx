@@ -26,7 +26,7 @@ export const WithToDoListProvider: React.FC<{ todos: ToDoItem[] }> = ({
   };
 
   const setStatus = async (itemId: string, done: boolean) => {
-    const changedTask = await setStatusTransport(itemId, done, '');
+    const changedTask = await setStatusTransport(itemId, done);
     patchItem(itemId, changedTask);
   };
 
