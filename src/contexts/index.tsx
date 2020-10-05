@@ -1,10 +1,11 @@
 import React from 'react';
+
+import { setStatus as setStatusTransport } from '../transport';
 import { ToDoItem } from '../types';
 
 interface IToDoListContext {
   todos: ToDoItem[];
-  loadToDos(): Promise<ToDoItem[]>;
-  setStatus(id: string, done: boolean): void;
+  setStatus(id: string, done: boolean): Promise<void>;
 }
 
 export const ToDoListContext = React.createContext<IToDoListContext>(undefined);
@@ -18,12 +19,15 @@ export const WithToDoListProvider: React.FC<{ todos: ToDoItem[] }> = ({
 }) => {
   const [todos, setTodos] = React.useState(preloaded);
 
-  const setStatus = (itemId: string, done: boolean) => {
+  const patchItem = (itemId: string, change: Partial<ToDoItem>) => {
     const target = todos.find(({ id }) => id === itemId);
-    if (target) {
-      target.done = done;
-      setTodos([...todos]);
-    }
+    Object.assign(target, change);
+    setTodos([...todos]);
+  };
+
+  const setStatus = async (itemId: string, done: boolean) => {
+    const changedTask = await setStatusTransport(itemId, done, '');
+    patchItem(itemId, changedTask);
   };
 
   return (
@@ -31,10 +35,6 @@ export const WithToDoListProvider: React.FC<{ todos: ToDoItem[] }> = ({
       value={{
         todos,
         setStatus,
-        loadToDos: () =>
-          fetch('/api/todos').then(
-            async (res: Response) => res.json() as Promise<ToDoItem[]>,
-          ),
       }}
     >
       {children}

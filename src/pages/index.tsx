@@ -5,15 +5,14 @@ import absoluteUrl from 'next-absolute-url';
 
 import HomePage from '../components/HomePage';
 import { WithToDoListProvider } from '../contexts';
+import { getTasks } from '../transport';
 import { ToDoItem } from '../types';
 
 export const getServerSideProps: GetServerSideProps<{
   todos: ToDoItem[];
 }> = async ({ req }) => {
   const { origin } = absoluteUrl(req);
-  const todos = await fetch(`${origin}/api/todos`).then(
-    async (res: Response) => res.json() as Promise<ToDoItem[]>,
-  );
+  const todos = await getTasks(origin);
 
   return {
     props: {
