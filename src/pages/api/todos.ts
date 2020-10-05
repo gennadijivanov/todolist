@@ -5,17 +5,17 @@ import { ToDoItem } from '../../types';
 const getAllTasks = (): Promise<ToDoItem[]> => {
   return Promise.resolve([
     {
-      id: '333',
+      id: 1,
       title: 'ToDo 333',
       done: false,
     },
     {
-      id: '555',
+      id: 2,
       title: 'ToDo 555',
       done: false,
     },
     {
-      id: '777',
+      id: 3,
       title: 'ToDo 777',
       done: true,
     },
@@ -23,7 +23,7 @@ const getAllTasks = (): Promise<ToDoItem[]> => {
 };
 
 const createTask = (data: Omit<ToDoItem, 'id'>): Promise<ToDoItem> => {
-  return Promise.resolve({ ...data, id: '123' });
+  return Promise.resolve({ ...data, id: Date.now() });
 };
 
 export default async (

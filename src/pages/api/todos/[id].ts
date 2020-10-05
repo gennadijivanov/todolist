@@ -14,7 +14,9 @@ export default (
 
   if (method === 'PATCH') {
     const { done } = JSON.parse(body);
-    res.status(200).json({ id: id as string, done: done as boolean });
+    res
+      .status(200)
+      .json({ id: parseInt(id as string, 10), done: done as boolean });
   } else {
     res.status(500);
   }

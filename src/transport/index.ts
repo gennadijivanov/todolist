@@ -7,7 +7,7 @@ export const getTasks = async (host?: string): Promise<ToDoItem[]> => {
 };
 
 export const setStatus = async (
-  id: string,
+  id: number,
   done: boolean,
 ): Promise<Partial<ToDoItem>> => {
   return fetch(`/api/todos/${id}`, {
