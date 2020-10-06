@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 import { ToDoListContext } from '../contexts';
 import { ToDoItem } from '../types';
 
+import AddTask from './AddTask';
 import ToDoList from './ToDoList';
 
 const getActive = (tasks: ToDoItem[]): ToDoItem[] =>
@@ -12,14 +14,28 @@ const getActive = (tasks: ToDoItem[]): ToDoItem[] =>
 const getDone = (tasks: ToDoItem[]): ToDoItem[] =>
   tasks.filter(({ done }) => done);
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    title: {
+      flexGrow: 1,
+    },
+  }),
+);
+
 const HomePage: React.FC = () => {
+  const classes = useStyles();
   const { todos } = React.useContext(ToDoListContext);
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h1" component="h1" gutterBottom={true}>
-        To? Do!
-      </Typography>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h3" className={classes.title}>
+            To? Do!
+          </Typography>
+          <AddTask />
+        </Toolbar>
+      </AppBar>
 
       <ToDoList todos={getActive(todos)} title="Future"></ToDoList>
 
