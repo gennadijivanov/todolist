@@ -1,0 +1,7 @@
+alias gpr='git pull --rebase --prune'
+alias gp='git push'
+alias gs='git status'
+alias gaa='git add .'
+alias gd='git diff'
+alias gdt='git difftool'
+alias gco='git checkout'
