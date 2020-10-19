@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# next-on-netlify
+/out_*
+
 # production
 /build
 
